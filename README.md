@@ -5,6 +5,8 @@
 
 Extend the [default Quasar app template](https://github.com/quasarframework/quasar-template-default) with a basic set of Express routes used in the frontend.
 
+![Demo app](/image.jpg)
+
 ## Usage
 
 Details to install a complete Express app powered by Quasar can be found here : https://github.com/quasarframework/quasar-wrapper-express-api.
