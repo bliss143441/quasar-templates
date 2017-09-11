@@ -1,4 +1,4 @@
-![Quasar Framework logo](http://quasar-framework.org/images/logo/xxhdpi.png)
+![Quasar Framework logo](https://cdn.rawgit.com/quasarframework/quasar-art/863c14bd/dist/svg/quasar-logo-full-inline.svg)
 
 # Quasar Framework Default App Template
 > Default Starter Kit for a Quasar Framework Project. Compatible with Quasar v0.9+
@@ -7,11 +7,19 @@
 Use Quasar CLI to generate a new project using this template:
 
 ``` bash
-$ quasar init <folder-name>
+# install Quasar CLI if you don't have it already
+$ npm install -g quasar-cli
+
+# generate a project folder with this template
+$ quasar init my-project
+
+$ cd my-project
+$ npm install
+$ quasar dev
 ```
 
 # Quasar Framework
-> Build responsive websites and hybrid mobile Apps (that look native!) using same code, with VueJs.
+> Build responsive websites, PWAs, hybrid mobile Apps (that look native!) and Electron apps using same code, powered with Vue.
 
 <a href="https://badge.fury.io/js/quasar-framework"><img src="https://badge.fury.io/js/quasar-framework.svg"></a>
 
