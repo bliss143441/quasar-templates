@@ -31,7 +31,7 @@
 
     </q-toolbar>
 
-    <div slot="left" ref="menu" v-show="authenticated">
+    <div slot="left" ref="menu" v-if="authenticated">
       <q-side-link item to="/home">
         <q-item-side icon="home" />
         <q-item-main label="Home"/>
