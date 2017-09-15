@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout-padding">
     <div v-if="!authenticated">
       <div class="column items-center">
         <div><img src="~assets/quasar-logo-full.svg"></div>
