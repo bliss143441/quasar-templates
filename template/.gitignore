@@ -5,3 +5,6 @@ dist/
 npm-debug.log*
 cordova/platforms
 cordova/plugins
+server/src/compiled-ssr.js
+server/src/0.compiled-ssr.js
+server/src/1.compiled-ssr.js
