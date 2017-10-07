@@ -5,6 +5,7 @@ module.exports = {
   "host": "localhost",
   "port": 3030,
   "public": "../../src/",
+  "dist": "../../dist/",
   "ssr": "../ssr/",
   "paginate": {
     "default": 10,

@@ -10,14 +10,14 @@ module.exports = function() {
   ['js', 'statics', 'fonts', 'img']
     .forEach(itemPath => {
       app.use(`/${itemPath}`, feathers.static(path.join(
-        app.get('public'), itemPath
+        app.get('dist'), itemPath
       )));
     });
 
   app.use('/app(.*).css', (req, res, next) => 
     feathers.static(
       path.join(
-        app.get('public'), req.originalUrl
+        app.get('dist'), req.originalUrl
       )
     )(req, res, next)
   );
