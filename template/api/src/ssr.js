@@ -20,7 +20,7 @@ module.exports = function() {
   );
   
   // The index.html file will need to have css files separated from the js files to avoid a page flicker.
-  const indexPath = path.join(app.get('public'), 'index.html');
+  const indexPath = path.join(app.get('dist'), 'index.html');
     
   let indexHTML;
   try {
