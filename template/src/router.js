@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+const qApp = document.getElementById('q-app')
+
 Vue.use(VueRouter)
 
 function load (component) {
@@ -8,8 +10,16 @@ function load (component) {
     return require(`src/components/${component}.vue`).default
   }
   else {
-    // '@' is aliased to src/components
-    return () => import(`@/${component}.vue`)
+    const performingHydration = qApp
+      .getAttribute('data-server-rendered')
+
+    if (performingHydration) {
+      return require(`src/components/${component}.vue`).default
+    }
+    else {
+      // '@' is aliased to src/components
+      return () => import(`@/${component}.vue`)
+    }
   }
 }
 
