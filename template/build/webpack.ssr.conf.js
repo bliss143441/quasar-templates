@@ -1,6 +1,7 @@
 var 
   config = require('../config'),
   webpack = require('webpack'),
+  env = require('./env-utils'),
   merge = require('webpack-merge'),
   cssUtils = require('./css-utils'),
   { cloneDeep } = require('lodash'),
@@ -16,7 +17,7 @@ module.exports = Object.assign({}, baseConfig, {
   target: 'node',
   watch: true,
   devServer: undefined,
-  devtool: '#cheap-module-eval-source-map',
+  devtool: undefined,
   entry: [
     path.resolve(
       __dirname, `../`, 
@@ -35,7 +36,7 @@ module.exports = Object.assign({}, baseConfig, {
   },
   module: {
     rules: cssUtils.styleRules({
-      sourceMap: config.dev.cssSourceMap,
+      sourceMap: false,
       postcss: true
     }).concat([
       {
