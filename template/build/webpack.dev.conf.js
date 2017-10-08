@@ -1,5 +1,6 @@
 var
   config = require('../config'),
+  path = require('path'),
   webpack = require('webpack'),
   merge = require('webpack-merge'),
   cssUtils = require('./css-utils'),
@@ -26,6 +27,11 @@ module.exports = merge(baseWebpackConfig, {
       sourceMap: config.dev.cssSourceMap,
       postcss: true
     })
+  },
+  output: {
+    path: path.resolve(__dirname, '../tmp'),
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[id].[chunkhash].js'
   },
   plugins: [
     new WebpackCleanupPlugin({

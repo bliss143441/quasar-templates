@@ -4,7 +4,7 @@ module.exports = {
   "client": clientConfig,
   "host": "localhost",
   "port": 3030,
-  "public": "../../src/",
+  "public": "../../tmp/",
   "dist": "../../dist/",
   "ssr": "../ssr/",
   "paginate": {

@@ -5,6 +5,7 @@ require('colors')
 var
   path = require('path'),
   express = require('express'),
+  shell = require('shelljs'),
   webpack = require('webpack'),
   env = require('./env-utils'),
   config = require('../config'),
@@ -26,6 +27,8 @@ if (config.renderSSR) {
   const renderSSR = require('./script.ssr')
   renderSSR({ watch: true })
 
+  shell.rm('-rf', path.resolve(__dirname, '../tmp'))
+
   webpack(webpackConfig, function (err, stats) {
     if (err) throw err
 
@@ -36,6 +39,8 @@ if (config.renderSSR) {
       chunks: false,
       chunkModules: false
     }) + '\n')
+
+    shell.cp('-R', 'src/statics', path.join(__dirname, '../tmp'))
 
     if (stats.hasErrors()) {
       process.exit(1)
