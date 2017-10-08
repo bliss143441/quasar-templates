@@ -3,6 +3,7 @@ var
   webpack = require('webpack'),
   merge = require('webpack-merge'),
   cssUtils = require('./css-utils'),
+  WebpackCleanupPlugin = require('webpack-cleanup-plugin'),
   baseWebpackConfig = require('./webpack.base.conf'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -19,6 +20,7 @@ module.exports = merge(baseWebpackConfig, {
     historyApiFallback: true,
     noInfo: true
   },
+  watch: true,
   module: {
     rules: cssUtils.styleRules({
       sourceMap: config.dev.cssSourceMap,
@@ -26,6 +28,9 @@ module.exports = merge(baseWebpackConfig, {
     })
   },
   plugins: [
+    new WebpackCleanupPlugin({
+      exclude: ["index.html"],
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
