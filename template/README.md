@@ -2,13 +2,6 @@
 
 > A Quasar project
 
-## Launch
-
-``` bash
-# Construct with
-$ quasar init @claustres/quasar-templates#feathers-api-ssr myFolderName
-```
-
 ## Build Setup
 
 ``` bash
