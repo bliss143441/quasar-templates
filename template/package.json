@@ -14,7 +14,7 @@
     "inspect": "NODE_CONFIG_DIR='./api/config' node --inspect-brk api/src/index.js",
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint api/src/. api/test/. --config .eslintrc.js",
-    "start": "node api/src/",
+    "start": "NODE_CONFIG_DIR='./api/config' node api/src/",
     "mocha": "mocha api/test/ --recursive",
     "prod": "NODE_CONFIG_DIR='./api/config' NODE_ENV=production node api/src"
   },

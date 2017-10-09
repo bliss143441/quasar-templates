@@ -27,13 +27,21 @@ $ quasar lint
 
 ## Run API Server with SSR
 
+#### For Development
+In one terminal run
+
 ``` bash
-
-# IMPORTANT: Make sure quasar build was run in the root folder
-
-$ cd api
-
-$ npm install
-
 $ npm run dev
+```
+
+And in another run
+
+``` bash
+$ npm run serve
+```
+
+#### For Production
+``` bash
+$ npm run build
+$ npm run prod
 ```
