@@ -16,9 +16,7 @@ $ quasar init @claustres/quasar-templates#feathers-api-ssr my-project
 $ cd my-project
 $ npm install
 $ quasar build
-$ cd api
-$ npm install
-$ npm run dev
+$ npm run prod
 ```
 
 # Quasar Framework
