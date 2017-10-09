@@ -41,10 +41,6 @@ if (config.renderSSR) {
     }) + '\n')
 
     shell.cp('-R', 'src/statics', path.join(__dirname, '../tmp'))
-
-    if (stats.hasErrors()) {
-      process.exit(1)
-    }
   })
 }
 

@@ -17,6 +17,9 @@ const appHooks = require('./app.hooks');
 const ssr = require('./ssr');
 const statics = require('./statics');
 
+// So feathers can find it's own config directory
+process.env.NODE_CONFIG_DIR = './api/config'
+
 const api = feathers();
 
 // Load app configuration
@@ -47,7 +50,7 @@ const app = feathers()
 
   // Adds api prefix to api requests. 
   .use('/api', api)
-  
+
   .configure(socketio())
 
   // Static files will be hosted on root
