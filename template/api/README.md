@@ -1,4 +1,4 @@
-# quasar-feathers-app
+# Feathers SSR API
 
 > Quasar App wrapped with Feathers
 
