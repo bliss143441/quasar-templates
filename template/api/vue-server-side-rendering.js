@@ -18,35 +18,41 @@ global.XMLHttpRequest = function() {
 
 module.exports = function(context) {
 
-  var { app, router } = require('../src/main.js').default;
+  return new Promise((resolve, reject) => {
 
-  // `router.push()` will load the url provided by our context and getMatchedComponents will retrieve all the associated parent and child components related to that url
-  router.push(context.url);
-  let matchedComponents = router.getMatchedComponents();
+    var { app, router } = require('../src/main.js').default;
 
-  // no matched routes
-  if (!matchedComponents.length) {
+    // `router.push()` will load the url provided by our context and getMatchedComponents will retrieve all the associated parent and child components related to that url
+    router.push(context.url);
 
-    return Promise.reject(new errors.NotFound(`There are no vue components for this url: ${context.url}`));
-  }
+    router.onReady(() => {
+      let matchedComponents = router.getMatchedComponents();
 
-  // We wait for the "ssr" hook to finish it's promises before rendering. You can run an isomorphic ajax library such as axios or isomorphic-fetch in it. It should be a function You that returns a promise and when it resolves it will render the html. This allows you to fetch all your ajax data before the html is sent and save the results to a store
+      // no matched routes
+      if (!matchedComponents.length) {
 
-  return Promise.all(matchedComponents.map(component => {
+        return Promise.reject(new errors.NotFound(`There are no vue components for this url: ${context.url}`));
+      }
 
-    const componentInstance = new Vue(component);
+      // We wait for the "ssr" hook to finish it's promises before rendering. You can run an isomorphic ajax library such as axios or isomorphic-fetch in it. It should be a function You that returns a promise and when it resolves it will render the html. This allows you to fetch all your ajax data before the html is sent and save the results to a store
 
-    let promises = [];
-
-    if (component.ssr && 
-        typeof component.ssr === 'function'
-    ) {
-      promises.push(
-        component.ssr.apply(componentInstance)
-      );
-    }
-
-    return Promise.all(promises);
-  })).then(() => app);
-
+      return Promise.all(matchedComponents.map(component => {
+        if(component.asyncData && typeof component.asyncData === 'function') {
+          return component.asyncData({
+            // store,
+            route: router.currentRoute
+          });
+        } else {
+          return undefined
+        }
+      }))
+        .then(() => {
+          // If you have a vuex or vue stash store, save the results to context.state
+          // context.state = store.state;
+          return app;
+        })
+        .then(resolve)
+        .catch(reject);
+    })
+  })
 };

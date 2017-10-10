@@ -8,11 +8,36 @@
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "serve": "NODE_CONFIG_DIR='./api/config' nodemon --watch api/src --watch config --ignore api/ssr",
+    "debug": "NODE_CONFIG_DIR='./api/config' nodemon --watch api/src --watch config --ignore api/ssr  --exec npm run inspect",
+    "inspect": "NODE_CONFIG_DIR='./api/config' node --inspect-brk api/src/index.js",
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint api/src/. api/test/. --config .eslintrc.js",
+    "start": "NODE_CONFIG_DIR='./api/config' node api/src/",
+    "mocha": "mocha api/test/ --recursive",
+    "prod": "NODE_CONFIG_DIR='./api/config' NODE_ENV=production node api/src"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.25.0",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "cors": "^2.8.4",
+    "feathers": "^2.2.2",
+    "feathers-configuration": "^0.4.1",
     "feathers-errors": "^2.9.2",
+    "feathers-hooks": "^2.1.0",
+    "feathers-hooks-common": "^3.7.3",
+    "feathers-rest": "^1.8.0",
+    "feathers-socketio": "^2.0.0",
+    "helmet": "^3.8.2",
+    "serve-favicon": "^2.4.5",
+    "vue-server-renderer": "~2.3.4",
+    "winston": "^2.4.0",
+    "babel-runtime": "^6.25.0",
     "jsdom": "^11.3.0",
     "mock-browser": "^0.92.14",
     "quasar-extras": "0.x",
@@ -50,11 +75,15 @@
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.0",
     "json-loader": "^0.5.7",
+    "mocha": "^4.0.0",
+    "nodemon": "^1.12.1",
     "opn": "^5.0.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "postcss-loader": "^1.0.0",
     "progress-bar-webpack-plugin": "^1.10.0",
     "purify-css": "^1.2.6",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
     "shelljs": "^0.7.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
@@ -67,6 +96,7 @@
     "webpack-cleanup-plugin": "^0.5.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }

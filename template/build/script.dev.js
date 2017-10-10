@@ -29,23 +29,21 @@ if (config.renderSSR) {
 
   shell.rm('-rf', path.resolve(__dirname, '../tmp'))
 
-  webpack(webpackConfig, function (err, stats) {
-    if (err) throw err
+  setTimeout(() => {
+    webpack(webpackConfig, function (err, stats) {
+      if (err) throw err
 
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    }) + '\n')
+      process.stdout.write(stats.toString({
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false
+      }) + '\n')
 
-    shell.cp('-R', 'src/statics', path.join(__dirname, '../tmp'))
-
-    if (stats.hasErrors()) {
-      process.exit(1)
-    }
-  })
+      shell.cp('-R', 'src/statics', path.join(__dirname, '../tmp'))
+    })
+  }, 30)
 }
 
 var compiler = webpack(webpackConfig)

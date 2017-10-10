@@ -6,22 +6,26 @@ var
   cssUtils = require('./css-utils'),
   { cloneDeep } = require('lodash'),
   baseWebpackConfig = require('./webpack.base.conf'),
+  VueSSRServerPlugin = require('vue-server-renderer/server-plugin'),
+  nodeExternals = require('webpack-node-externals'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
   path = require('path'),
   FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const projectRoot = path.resolve(__dirname, '../')
-const serverFolder = config.serverFolder || 'api'
 const baseConfig = cloneDeep(baseWebpackConfig)
 
 module.exports = Object.assign({}, baseConfig, {
   target: 'node',
   watch: true,
   devServer: undefined,
-  devtool: undefined,
+  devtool: env.prod
+    ? false
+    : '#cheap-module-eval-source-map',
   entry: [
     path.resolve(
       __dirname, `../`, 
-      serverFolder, 
+      config.serverFolder || 'api', 
       config.ssrFile
     )
   ],
@@ -29,14 +33,24 @@ module.exports = Object.assign({}, baseConfig, {
     libraryTarget: 'commonjs2',
     path: path.resolve(
       __dirname, `../`, 
-      serverFolder,
+      config.serverFolder || 'api',
       config.ssrBuildOutputFolder
     ),
-    filename: 'compiled-ssr.js',
   },
+  // https://webpack.js.org/configuration/externals/#function
+  // https://github.com/liady/webpack-node-externals
+  // Externalize app dependencies. This makes the server build much faster
+  // and generates a smaller bundle file.
+  externals: nodeExternals({
+    // do not externalize dependencies that need to be processed by webpack.
+    // you can add more file types here e.g. raw *.vue files
+    // you should also whitelist deps that modifies `global` (e.g. polyfills)
+    whitelist: /(\.css$|\.less$|\.sass$|\.scss$|\.styl$|\.stylus$|\.(png|jpe?g|gif|svg)(\?.*)?$|\.(woff2?|eot|ttf|otf)(\?.*)?$)/
+  }),
   module: {
     rules: cssUtils.styleRules({
       sourceMap: false,
+      extract: true,
       postcss: true
     }).concat([
       {
@@ -52,7 +66,7 @@ module.exports = Object.assign({}, baseConfig, {
           postcss: cssUtils.postcss,
           loaders: merge({js: 'babel-loader'}, cssUtils.styleLoaders({
             sourceMap: false,
-            extract: false
+            extract: true
           }))
         }
       },
@@ -79,6 +93,10 @@ module.exports = Object.assign({}, baseConfig, {
     ])
   },
   plugins: baseConfig.plugins.concat([
+    new VueSSRServerPlugin(),
+    new ExtractTextPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new FriendlyErrorsPlugin({
       clearConsole: config.dev.clearConsoleOnRebuild

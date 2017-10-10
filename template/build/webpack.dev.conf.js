@@ -1,13 +1,14 @@
 var
   config = require('../config'),
-  path = require('path'),
   webpack = require('webpack'),
+  path = require('path'),
   merge = require('webpack-merge'),
   cssUtils = require('./css-utils'),
-  WebpackCleanupPlugin = require('webpack-cleanup-plugin'),
   baseWebpackConfig = require('./webpack.base.conf'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
-  FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+  FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin'),
+  WebpackCleanupPlugin = require('webpack-cleanup-plugin'),
+  VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -17,11 +18,11 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 module.exports = merge(baseWebpackConfig, {
   // eval-source-map is faster for development
   devtool: '#cheap-module-eval-source-map',
+  watch: true,
   devServer: {
     historyApiFallback: true,
     noInfo: true
   },
-  watch: true,
   module: {
     rules: cssUtils.styleRules({
       sourceMap: config.dev.cssSourceMap,
@@ -29,10 +30,10 @@ module.exports = merge(baseWebpackConfig, {
     })
   },
   output: {
-    path: path.resolve(__dirname, '../tmp'),
-    filename: 'js/[name].js',
-    publicPath: config.dev.publicPath,
-    chunkFilename: 'js/[id].[chunkhash].js'
+    path: path.resolve(
+      __dirname, `../tmp`
+    ),
+    publicPath: config.dev.publicPath
   },
   plugins: [
     new WebpackCleanupPlugin({
@@ -45,6 +46,7 @@ module.exports = merge(baseWebpackConfig, {
       template: 'src/index.html',
       inject: true
     }),
+    new VueSSRClientPlugin(),
     new FriendlyErrorsPlugin({
       clearConsole: config.dev.clearConsoleOnRebuild
     })

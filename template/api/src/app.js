@@ -47,7 +47,7 @@ const app = feathers()
 
   // Adds api prefix to api requests. 
   .use('/api', api)
-  
+
   .configure(socketio())
 
   // Static files will be hosted on root

@@ -1,26 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const qApp = document.getElementById('q-app')
-
 Vue.use(VueRouter)
 
 function load (component) {
-  if (Vue.prototype.$isServer) {
-    return require(`src/components/${component}.vue`).default
-  }
-  else {
-    const performingHydration = qApp
-      .getAttribute('data-server-rendered')
-
-    if (performingHydration) {
-      return require(`src/components/${component}.vue`).default
-    }
-    else {
-      // '@' is aliased to src/components
-      return () => import(`@/${component}.vue`)
-    }
-  }
+  return () => import(`@/${component}.vue`)
 }
 
 export default new VueRouter({
