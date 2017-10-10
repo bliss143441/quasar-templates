@@ -4,17 +4,17 @@ const errors = require('feathers-errors')
 /**
  * Prepare mock browser so references to window, document, Element, and navigator don't break the SSR inside of Quasar
  */
-const { JSDOM } = require('jsdom');
-global.window = new JSDOM().window;
-var MockBrowser = require('mock-browser').mocks.MockBrowser;
-var mock = new MockBrowser({ window });
-global.document = mock.getDocument();
-global.window = mock.getWindow();
-global.navigator = mock.getNavigator();
-global.Element = function() {}
-global.XMLHttpRequest = function() {
-  this.send = () => {}
-}
+// const { JSDOM } = require('jsdom');
+// global.window = new JSDOM().window;
+// var MockBrowser = require('mock-browser').mocks.MockBrowser;
+// var mock = new MockBrowser({ window });
+// global.document = mock.getDocument();
+// global.window = mock.getWindow();
+// global.navigator = mock.getNavigator();
+// global.Element = function() {}
+// global.XMLHttpRequest = function() {
+//   this.send = () => {}
+// }
 
 module.exports = function(context) {
 
