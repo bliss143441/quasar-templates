@@ -9,14 +9,14 @@
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js",
     "lint": "eslint --ext .js,.vue src",
-    "serve": "NODE_CONFIG_DIR='./api/config' nodemon --watch api/src --watch config --ignore api/ssr",
-    "debug": "NODE_CONFIG_DIR='./api/config' nodemon --watch api/src --watch config --ignore api/ssr  --exec npm run inspect",
-    "inspect": "NODE_CONFIG_DIR='./api/config' node --inspect-brk api/src/index.js",
+    "serve": "nodemon --watch api/src --watch config --ignore api/ssr",
+    "debug": "nodemon --watch api/src --watch config --ignore api/ssr  --exec npm run inspect",
+    "inspect": "node --inspect-brk api/src/index.js",
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint api/src/. api/test/. --config .eslintrc.js",
-    "start": "NODE_CONFIG_DIR='./api/config' node api/src/",
+    "start": "node api/src/",
     "mocha": "mocha api/test/ --recursive",
-    "prod": "NODE_CONFIG_DIR='./api/config' NODE_ENV=production node api/src"
+    "prod": "NODE_ENV=production node api/src"
   },
   "engines": {
     "node": ">= 6.0.0",
