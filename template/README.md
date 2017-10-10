@@ -8,8 +8,8 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:8080
-$ quasar dev
+# serve with ssr and hot reload at localhost:3030
+$ npm run serve
 
 # build for production with minification
 $ quasar build
@@ -20,21 +20,16 @@ $ quasar lint
 
 ## Run API Server with SSR
 
-#### For Development
+### For Development
 In one terminal run
-
-``` bash
-$ npm run dev
-```
-
-And in another run
 
 ``` bash
 $ npm run serve
 ```
 
-#### For Production
+### For Production
+
 ``` bash
-$ npm run build
+$ quasar build
 $ npm run prod
 ```

@@ -8,6 +8,7 @@ function load (component) {
 }
 
 export default new VueRouter({
+  // mode: 'history',
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.
@@ -22,7 +23,6 @@ export default new VueRouter({
 
   routes: [
     { path: '/', component: load('Hello') },
-
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found
   ]

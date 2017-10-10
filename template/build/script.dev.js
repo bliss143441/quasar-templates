@@ -16,34 +16,10 @@ var
   port = process.env.PORT || config.dev.port,
   uri = 'http://localhost:' + port
 
-console.log(' Starting dev server with "' + (process.argv[2] || env.platform.theme).bold + '" theme...')
-console.log(' Will listen at ' + uri.bold)
+console.log(' Starting dev server with "' + (process.argv[2] || env.platform.theme) + '" theme...')
+console.log(' Will listen at ' + uri)
 if (config.dev.openBrowser) {
   console.log(' Browser will open when build is ready.\n')
-}
-
-// Compile SSR
-if (config.renderSSR) {
-  const renderSSR = require('./script.ssr')
-  renderSSR({ watch: true })
-
-  shell.rm('-rf', path.resolve(__dirname, '../tmp'))
-
-  setTimeout(() => {
-    webpack(webpackConfig, function (err, stats) {
-      if (err) throw err
-
-      process.stdout.write(stats.toString({
-        colors: true,
-        modules: false,
-        children: false,
-        chunks: false,
-        chunkModules: false
-      }) + '\n')
-
-      shell.cp('-R', 'src/statics', path.join(__dirname, '../tmp'))
-    })
-  }, 30)
 }
 
 var compiler = webpack(webpackConfig)
