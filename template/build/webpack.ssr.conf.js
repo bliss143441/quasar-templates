@@ -21,7 +21,7 @@ module.exports = Object.assign({}, baseConfig, {
   devServer: undefined,
   devtool: env.prod
     ? false
-    : '#cheap-module-eval-source-map',
+    : 'source-map',
   entry: [
     path.resolve(
       __dirname, `../`, 
@@ -31,11 +31,8 @@ module.exports = Object.assign({}, baseConfig, {
   ],
   output: {
     libraryTarget: 'commonjs2',
-    path: path.resolve(
-      __dirname, `../`, 
-      config.serverFolder || 'api',
-      config.ssrBuildOutputFolder
-    ),
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: config[env.prod ? 'build' : 'dev'].publicPath,
   },
   // https://webpack.js.org/configuration/externals/#function
   // https://github.com/liady/webpack-node-externals

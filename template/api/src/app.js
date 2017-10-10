@@ -15,7 +15,6 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 
 const ssr = require('./ssr');
-const statics = require('./statics');
 
 const api = feathers();
 
@@ -50,10 +49,7 @@ const app = feathers()
 
   .configure(socketio())
 
-  // Static files will be hosted on root
-  .configure(statics)
-
-  // Render the app server side first for better SEO and speed
+  // Handle static assets and render the app server side first for better SEO and speed
   .configure(ssr);
 
 module.exports = app;

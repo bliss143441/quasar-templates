@@ -8,7 +8,8 @@ var
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin'),
   WebpackCleanupPlugin = require('webpack-cleanup-plugin'),
-  VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+  VueSSRClientPlugin = require('vue-server-renderer/client-plugin'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -26,13 +27,12 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     rules: cssUtils.styleRules({
       sourceMap: config.dev.cssSourceMap,
-      postcss: true
+      postcss: true,
+      extract: true
     })
   },
   output: {
-    path: path.resolve(
-      __dirname, `../tmp`
-    ),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: config.dev.publicPath
   },
   plugins: [
@@ -41,10 +41,26 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'src/index.html',
-      inject: true
+    // extract vendor chunks for better caching
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // a module is extracted into the vendor chunk if...
+        return (
+          // it's inside node_modules
+          /node_modules/.test(module.context) &&
+          // and not a CSS file (due to extract-text-webpack-plugin limitation)
+          !/\.css$/.test(module.request)
+        )
+      }
+    }),
+    // extract webpack runtime & manifest to avoid vendor chunk hash changing
+    // on every build.
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].[contenthash].css'
     }),
     new VueSSRClientPlugin(),
     new FriendlyErrorsPlugin({
