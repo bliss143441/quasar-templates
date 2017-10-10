@@ -1,9 +1,10 @@
-const clientConfig = require('../../config')
+const clientConfig = require('../../config');
+const { get } = require('lodash');
 
 module.exports = {
   "client": clientConfig,
   "host": "localhost",
-  "port": 3030,
+  "port": get(clientConfig, 'server.port') || 3030,
   "public": "../../dist/",
   "build": "../../build/",
   "ssr": "../ssr/",

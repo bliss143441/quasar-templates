@@ -32,7 +32,7 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   let template
   let clientManifest
 
-  const port = process.env.PORT || app.get('port') || config.dev.port
+  const port = process.env.PORT || config.server.port
   const uri = 'http://localhost:' + port
 
   console.log(' Starting dev server with "' + (process.argv[2] || env.platform.theme).bold + '" theme...')
@@ -91,21 +91,21 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   }))
 
   var staticsPath = path.posix.join(clientConfig.output.publicPath, 'statics/')
-  app.use(staticsPath, express.static(path.join(app.get('src'), 'statics')))
+  app.use(staticsPath, express.static(path.join(__dirname, '../src/', 'statics')))
 
   // var hotReloadPath = path.posix.join(clientConfig.output.publicPath, '/')
   // app.use(path.join(hotReloadPath, '/app(.*).css'), express.static('./src/'))
 
-  // let alreadyOpened = false
-  // // open browser if set so in /config/index.js
-  // if (config.dev.openBrowser) {
-  //   devMiddleware.waitUntilValid(function () {
-  //     if(!alreadyOpened) {
-  //       opn(uri)
-  //       alreadyOpened = true
-  //     }
-  //   })
-  // }
+  let alreadyOpened = false
+  // open browser if set so in /config/index.js
+  if (config.dev.openBrowser) {
+    devMiddleware.waitUntilValid(function () {
+      if(!alreadyOpened) {
+        opn(uri)
+        alreadyOpened = true
+      }
+    })
+  }
 
   // proxy requests like API. See /config/index.js -> dev.proxyTable
   // https://github.com/chimurai/http-proxy-middleware

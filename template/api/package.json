@@ -1,0 +1,53 @@
+{
+  "name": "quasar-feathers-app",
+  "description": "Quasar App wrapped with Feathers",
+  "version": "0.0.1",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": "Your name",
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "dev": "nodemon --watch src --watch config",
+    "debug": "nodemon --watch src --watch config  --exec npm run inspect",
+    "inspect": "node --inspect-brk src/index.js",
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint src/. test/. --config .eslintrc.js",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive --timeout 20000",
+    "prod": "NODE_ENV=production node src"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "cors": "^2.8.4",
+    "feathers": "^2.2.2",
+    "feathers-configuration": "^0.4.1",
+    "feathers-errors": "^2.9.2",
+    "feathers-hooks": "^2.1.0",
+    "feathers-hooks-common": "^3.7.3",
+    "feathers-rest": "^1.8.0",
+    "feathers-socketio": "^2.0.0",
+    "helmet": "^3.8.2",
+    "serve-favicon": "^2.4.5",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "jsdom": "^11.3.0",
+    "mocha": "^4.0.0",
+    "nodemon": "^1.12.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}

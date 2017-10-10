@@ -22,13 +22,9 @@ module.exports = Object.assign({}, baseConfig, {
   devtool: env.prod
     ? false
     : 'source-map',
-  entry: [
-    path.resolve(
-      __dirname, `../`, 
-      config.serverFolder || 'api', 
-      config.ssrFile
-    )
-  ],
+  entry: {
+    app: path.resolve(__dirname, '../src', 'server-entry.js')
+  },
   output: {
     libraryTarget: 'commonjs2',
     path: path.resolve(__dirname, '../dist'),

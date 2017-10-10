@@ -7,12 +7,12 @@
 const isProd = process.env.NODE_ENV === 'production';
 const path = require('path');
 const fs = require('fs');
-const express = require('express');
 const feathers = require('feathers');
 const favicon = require('serve-favicon');
-const webpackConfig = require('../../build/webpack.dev.conf');
+
+// Prevent the dev server from generating it's own html file, we want to use our SSR generated one
+process.env.dismissHTML = true;
 const { createBundleRenderer } = require('vue-server-renderer');
-const expressApp = express();
 
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
@@ -24,7 +24,7 @@ function createRenderer (bundle, options) {
     }) : undefined,
     // recommended for performance
     runInNewContext: false
-  }))
+  }));
 }
 
 module.exports = function() {
@@ -32,20 +32,20 @@ module.exports = function() {
 
   const templatePath = path.join(app.get('src'), 'index.html');
 
-  let renderer
+  let renderer, readyPromise;
 
   if (isProd) {
-    const template = fs.readFileSync(templatePath, 'utf-8')
+    const template = fs.readFileSync(templatePath, 'utf-8');
 
     const serverBundle = require(path.join( 
       app.get('public'),
       'vue-ssr-server-bundle.json' 
-    ))
+    ));
 
     const clientManifest = require(path.join( 
       app.get('public'),
       'vue-ssr-client-manifest.json' 
-    ))
+    ));
 
     renderer = createRenderer(serverBundle, {
       template: template.replace(
@@ -53,7 +53,7 @@ module.exports = function() {
         '<!--vue-ssr-outlet-->'
       ),
       clientManifest
-    })
+    });
 
     // Serve static assets
     app.use(favicon(path.join(app.get('public'), 'statics', 'favicon.ico')));
