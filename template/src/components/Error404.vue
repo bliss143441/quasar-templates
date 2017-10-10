@@ -41,7 +41,7 @@ export default {
   },
   data () {
     return {
-      canGoBack: window.history.length > 1
+      canGoBack: typeof window !== 'undefined' && Array.isArray(window.history) && window.history.length > 1
     }
   },
   methods: {

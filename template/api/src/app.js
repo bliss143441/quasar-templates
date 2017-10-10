@@ -4,6 +4,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 
+// We need to set this before requiring `feathers-configuration` so it can find our local config folders
+process.env.NODE_CONFIG_DIR = './api/config';
+
 const feathers = require('feathers');
 const configuration = require('feathers-configuration');
 const hooks = require('feathers-hooks');

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { Platform } from 'quasar'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,8 @@ function load (component) {
 }
 
 export default new VueRouter({
-  // mode: 'history',
+  
+  mode: Platform.is.cordova ? 'hash' : Vue.prototype.$isServer ? 'abstract' : 'history',
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.
