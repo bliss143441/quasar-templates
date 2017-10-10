@@ -22,6 +22,8 @@ module.exports = {
     port: 8081
   },
 
+  renderSSR: true,
+
   build: {
     env: require('./prod.env'),
     publicPath: '',
