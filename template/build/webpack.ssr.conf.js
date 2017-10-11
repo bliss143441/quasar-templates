@@ -5,6 +5,7 @@ var
   merge = require('webpack-merge'),
   cssUtils = require('./css-utils'),
   { cloneDeep } = require('lodash'),
+  ProgressBarPlugin = require('progress-bar-webpack-plugin'),
   baseWebpackConfig = require('./webpack.base.conf'),
   VueSSRServerPlugin = require('vue-server-renderer/server-plugin'),
   nodeExternals = require('webpack-node-externals'),
@@ -86,6 +87,9 @@ module.exports = Object.assign({}, baseConfig, {
     ])
   },
   plugins: baseConfig.plugins.concat([
+    new ProgressBarPlugin({
+      format: ' [:bar] ' + ':percent'.bold + ' (:msg)'
+    }),
     new VueSSRServerPlugin(),
     new ExtractTextPlugin({
       filename: '[name].[contenthash].css'
