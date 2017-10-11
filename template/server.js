@@ -107,7 +107,10 @@ function ssr(expressApp) {
 
   function renderHtml(req, res) {
     
-    var context = { url: req.url }
+    var context = {
+      url: req.url, 
+      userAgent: req.headers['user-agent'] 
+    }
 
     renderer.renderToString(context, (err, html) => {
       if (err) {
@@ -120,7 +123,6 @@ function ssr(expressApp) {
   }
 
   app.get('/*', isProd ? renderHtml : (req, res) => {
-    global.userAgent = req.headers['user-agent']
     readyPromise.then(() => renderHtml(req, res))
   })
 }
