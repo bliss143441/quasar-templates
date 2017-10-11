@@ -11,7 +11,7 @@ function load (component) {
 export default new VueRouter({
   
   // Here we must manually determine the mode because we are mocking the window object on the server and it misses up vue-routers internal platform detection
-  mode: Platform.is.cordova ? 'hash' : Vue.prototype.$isServer ? 'abstract' : 'history',
+  mode: Platform.is.cordova ? 'hash' : 'history',
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.
