@@ -120,6 +120,7 @@ function ssr(expressApp) {
   }
 
   app.get('/*', isProd ? renderHtml : (req, res) => {
+    global.userAgent = req.headers['user-agent']
     readyPromise.then(() => renderHtml(req, res))
   })
 }
