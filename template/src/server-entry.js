@@ -2,7 +2,7 @@ module.exports = function(context) {
 
   return new Promise((resolve, reject) => {
 
-    var { app, router, /*store*/ } = require('./main.js').default;
+    var { app, router } = require('./main.js').default;
 
     // `router.push()` will load the url provided by our context and getMatchedComponents will retrieve all the associated parent and child components related to that url
     router.push(context.url);
@@ -13,18 +13,19 @@ module.exports = function(context) {
       // no matched routes
       if (!matchedComponents.length) {
 
-        return Promise.reject(`There are no vue components for this url: ${context.url}`);
+        return Promise.reject(new Error(`There are no vue components for this url: ${context.url}`));
       }
 
       // We wait for the "ssr" hook to finish it's promises before rendering. You can run an isomorphic ajax library such as axios or isomorphic-fetch in it. It should be a function You that returns a promise and when it resolves it will render the html. This allows you to fetch all your ajax data before the html is sent and save the results to a store
 
       return Promise.all(matchedComponents.map(component => {
-        if(component.asyncData && typeof component.asyncData === 'function') {
+        if (component.asyncData && typeof component.asyncData === 'function') {
           return component.asyncData({
             // store,
             route: router.currentRoute
           });
-        } else {
+        }
+        else {
           return undefined
         }
       }))

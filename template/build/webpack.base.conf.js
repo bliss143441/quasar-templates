@@ -15,6 +15,10 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+if(process.env.NODE_ENV === 'test') {
+  env.platform.theme = 'mat'
+}
+
 module.exports = {
   entry: {
     app: path.resolve(__dirname, '../src', 'main.js')

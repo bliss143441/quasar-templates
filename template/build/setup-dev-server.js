@@ -35,9 +35,9 @@ module.exports = function setupDevServer (app, templatePath, cb) {
   const port = process.env.PORT || config.server.port
   const uri = 'http://localhost:' + port
 
-  console.log(' Starting dev server with "' + (process.argv[2] || env.platform.theme).bold + '" theme...')
+  console.log(' Starting dev server with "' + (process.env.NODE_ENV === 'test' ? 'mat' : (process.argv[2] || env.platform.theme)).bold + '" theme...')
   console.log(' Will listen at ' + uri.bold)
-  if (config.dev.openBrowser) {
+  if (config.dev.openBrowser && process.env.NODE_ENV !== 'test') {
     console.log(' Browser will open when build is ready.\n')
   }
 
