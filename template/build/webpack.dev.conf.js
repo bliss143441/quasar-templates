@@ -13,7 +13,7 @@ var
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/hot-reload.js', baseWebpackConfig.entry[name]]
+  baseWebpackConfig.entry[name] = [path.resolve(__dirname, '../build/hot-reload.js'), baseWebpackConfig.entry[name]]
 })
 
 module.exports = merge(baseWebpackConfig, {
@@ -41,24 +41,6 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // extract vendor chunks for better caching
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function (module) {
-        // a module is extracted into the vendor chunk if...
-        return (
-          // it's inside node_modules
-          /node_modules/.test(module.context) &&
-          // and not a CSS file (due to extract-text-webpack-plugin limitation)
-          !/\.css$/.test(module.request)
-        )
-      }
-    }),
-    // extract webpack runtime & manifest to avoid vendor chunk hash changing
-    // on every build.
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
-    }),
     new ExtractTextPlugin({
       filename: '[name].[contenthash].css'
     }),
@@ -66,7 +48,16 @@ module.exports = merge(baseWebpackConfig, {
     new FriendlyErrorsPlugin({
       clearConsole: config.dev.clearConsoleOnRebuild
     })
-  ],
+  ].concat(
+    !process.env.dismissHTML ? 
+      [
+        new HtmlWebpackPlugin({
+          filename: 'index.html',
+          template: path.resolve(__dirname, '../src/index.html'),
+          inject: true
+        })
+      ] : []
+  ),
   performance: {
     hints: false
   }

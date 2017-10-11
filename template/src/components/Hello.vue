@@ -110,8 +110,8 @@ export default {
   },
   data () {
     return {
-      orienting: window.DeviceOrientationEvent && !this.$q.platform.is.desktop,
-      rotating: window.DeviceMotionEvent && !this.$q.platform.is.desktop,
+      orienting: !this.$isServer && (window.DeviceOrientationEvent && !this.$q.platform.is.desktop),
+      rotating: !this.$isServer && (window.DeviceMotionEvent && !this.$q.platform.is.desktop),
       moveX: 0,
       moveY: 0,
       rotateY: 0,

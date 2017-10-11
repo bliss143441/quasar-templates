@@ -10,7 +10,7 @@ function load (component) {
 
 export default new VueRouter({
   
-  mode: Platform.is.cordova ? 'hash' : Vue.prototype.$isServer ? 'abstract' : 'history',
+  mode: Platform.is.cordova || Platform.is.electron ? 'hash' : 'history',
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.

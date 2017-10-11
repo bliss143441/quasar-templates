@@ -11,24 +11,18 @@ module.exports = {
     variables: path.resolve(__dirname, '../src/themes/quasar.variables.styl')
   },
 
-  // The folder name where the server is stored
-  serverFolder: 'api',
-
-  // Will look into the root of the serverFolder for this file
-  ssrFile: 'vue-server-side-rendering.js',
-
-  // Build output folder name rooted in serverFolder for SSR
-  ssrBuildOutputFolder: 'ssr/',
-
-  // Should webpack compile the ssrFile
-  renderSSR: true,
-
   // Progress Bar Webpack plugin format
   // https://github.com/clessg/progress-bar-webpack-plugin#options
   progressFormat: ' [:bar] ' + ':percent'.bold + ' (:msg)',
 
   // Default theme to build with ('ios' or 'mat')
   defaultTheme: 'mat',
+
+  server: {
+    port: 8081
+  },
+
+  renderSSR: true,
 
   build: {
     env: require('./prod.env'),

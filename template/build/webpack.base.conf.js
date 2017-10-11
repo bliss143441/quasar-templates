@@ -17,7 +17,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: path.resolve(__dirname, '../src', 'main.js')
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

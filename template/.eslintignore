@@ -4,4 +4,3 @@ dist/*.js
 api/build/*.js
 api/config/*.js
 api/dist/*.js
-api/ssr/*.js

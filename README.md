@@ -15,8 +15,17 @@ $ quasar init @claustres/quasar-templates#feathers-api-ssr my-project
 
 $ cd my-project
 $ npm install
-$ quasar build
-$ npm run prod
+$ quasar dev
+```
+
+### Optional
+Install the Featherjs companion SSR server
+
+``` bash
+$quasar init @quasarframework/quasar-wrapper-feathersjs-api#ssr api
+$ cd api
+$ npm install
+$ npm run dev
 ```
 
 # Quasar Framework

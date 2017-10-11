@@ -35,6 +35,7 @@ function finalize () {
 if (config.renderSSR) {
   const renderSSR = require('./script.ssr')
   renderSSR({ watch: false })
+  shell.cp('-R', 'src/index.html', path.join(targetPath, 'index.template.html'))
 }
 
 webpack(webpackConfig, function (err, stats) {
