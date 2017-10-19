@@ -16,6 +16,7 @@
     "quasar-framework": "^0.14.4",
     "serve-favicon": "^2.4.5",
     "vue": "~2.3.4",
+    "vue-no-ssr": "^0.2.0",
     "vue-router": "^2.7.0"
   },
   "devDependencies": {
